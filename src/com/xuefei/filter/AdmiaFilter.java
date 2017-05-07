@@ -1,0 +1,35 @@
+package com.xuefei.filter;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
+public class AdmiaFilter implements Filter {
+
+	@Override
+	public void destroy() {
+	}
+
+	@Override
+	public void doFilter(ServletRequest arg0, ServletResponse arg1,
+			FilterChain arg2) throws IOException, ServletException {
+		String ip = arg0.getRemoteHost();
+		arg1.setContentType("text/html;charset=utf-8");
+		if("localhost".equals(ip) || "127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip))
+		{
+			arg2.doFilter(arg0, arg1);
+		} else {
+			arg1.getWriter().write("È¨ÏÞ²»¹»");
+		}
+	}
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+	}
+
+}
